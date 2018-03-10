@@ -114,7 +114,7 @@ public class StudentInfoADT {
 		 *****************************************************************************/
 		
 		//String firstName, lastName, middleInitial, dateOfBirth, grade;
-		String firstName="First name", lastName="Last name", dateOfBirth="Date of Birth", middleInitial="Middle Initial", grade="Grade", identified="if the student is identified";
+		String firstName="first name", lastName="last name", dateOfBirth="date of Birth mm/dd/yyyy", middleInitial="middle Initial", grade="grade", identified="if the student is identified";
 		
 		/****************************************************************************
 			List<String> currentStudent = new ArrayList<String>();
@@ -123,21 +123,24 @@ public class StudentInfoADT {
 			List<Integer> currentStudent = new ArrayList<>();
 		 *****************************************************************************/
 				
-		String[] currentStudent = new String [] {firstName, lastName, middleInitial, dateOfBirth, grade, identified};
-				
+		String[] currentStudent;
+		
+		Integer classRoomStudentCount = 3;//three students in class
+		Student[] classRoom = new Student[classRoomStudentCount];
+		Integer nthStudent = 0;
 		
 		//get input
 		//while (haveGottenDistance == "") {
-		while (true) {
+		while (nthStudent <  classRoomStudentCount) {
 			//get input and put it to array
-			
+			currentStudent = new String[] {firstName, lastName, middleInitial, dateOfBirth, grade, identified};
 			for ( int index=0; index<currentStudent.length; index++ ) {  
 	    		//get correct input
 			    getCorrectInput:
 			    	while (true) {
-						System.out.println("\nEnter "+currentStudent[index]+" for student");
+						System.out.println("\n\nEnter "+currentStudent[index]+" for student #"+(nthStudent+1));
 						//---------------------------
-						if (currentStudent[index] == "Grade") {
+						if (currentStudent[index] == grade) {
 							System.out.print("Options: ");
 							//for grades, print possible inputs
 							for(GradesEnum grades : GradesEnum.values()) { 
@@ -178,7 +181,7 @@ public class StudentInfoADT {
 			//create student
 			//firstName, lastName, dateOfBirth, middleInitial, grade, identified
 					//Student thisStudent = new Student(firstName, lastName, dateOfBirth, middleInitial, grade, identified);
-			Student thisStudent = new Student(currentStudent[0].toString(), currentStudent[1], currentStudent[2], currentStudent[3], currentStudent[4], currentStudent[5]);
+			classRoom[nthStudent] = new Student(currentStudent[0].toString(), currentStudent[1], currentStudent[2], currentStudent[3], currentStudent[4], currentStudent[5]);
 		    
 			
 			
@@ -190,8 +193,8 @@ public class StudentInfoADT {
 			    		thisStudent._firstName, thisStudent._middleInitial, thisStudent._lastName, thisStudent._grade);
 			 System.out.println(stringToPrint);
 			 ****************************************************************************/
-			 System.out.println("Student " + thisStudent.studentAllInfo() + "!");
-			 break;
+			 System.out.println("Student #" + (nthStudent+1) + ": " + classRoom[nthStudent].studentAllInfo());
+			 nthStudent+=1;
 			
 		}//closing for while
 	}//closing for main

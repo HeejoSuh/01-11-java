@@ -27,8 +27,8 @@
 import java.util.Scanner;
 
 //---------------------------------------------------------------------------------
-
 //enum showing Grades and grade in String
+//possible to put inside class
 enum GradesEnum {
 	TWELVE("12"), 
 	ELEVEN("11"), 
@@ -42,14 +42,9 @@ enum GradesEnum {
 	GradesEnum(String grade) {
         this.grade = grade;
     }
-}//closing for enum
-
+}//closing for enum		
 
 //---------------------------------------------------------------------------------
-/****************************************************************************
-	Written by Mr. Coxall
-	This class creates a student database and returns values
-****************************************************************************/
 class Student {
 	
 	public String _firstName;
@@ -60,16 +55,27 @@ class Student {
 	public String _grade;
 	//public boolean _identified;
 	public String _identified;
+
+	public String _studentWholeInfo;
 	
-	//constructor
+	//------------------------
+	public String getStudent(){
+		//return entire student information
+		String studentInfo = (_firstName+_middleInitial+_lastName+" in grade"+_grade);
+	    return studentInfo;
+	}//close for getMax			
+ 
+
+	
+	//default constructor for student-----------------------
 	public Student (String firstName, 
-			        String lastName, 
-			        String middleInitial, 
-			        String dateOfBirth, 
-			        //GradesEnum grade,  
-			        String grade, 
-			        //boolean identified
-			        String identified) {
+					String lastName,  
+					String middleInitial,  
+					String dateOfBirth, 
+					//GradesEnum grade,
+					String grade, 
+					//boolean identified
+					String identified) {
 		
 		//local "this"
 		this._firstName = firstName;
@@ -78,6 +84,12 @@ class Student {
 		this._dateOfBirth = dateOfBirth;
 		this._grade = grade;
 		this._identified = identified;
+	}
+	
+	public String studentAllInfo() {
+		//returns full info 
+		String fullInfo = _firstName+" "+_middleInitial+" "+_lastName+" in grade "+_grade.toLowerCase();
+		return fullInfo;
 	}
 }
 
@@ -140,6 +152,7 @@ public class StudentInfoADT {
 							//if input is in enum
 							try {
 								Object currentGrade = GradesEnum.valueOf(currentInput.toUpperCase());
+								//currentStudent[index] = currentGrade.toString();
 								currentStudent[index] = currentGrade.toString();
 								break getCorrectInput;
 							}catch (IllegalArgumentException x) { 
@@ -165,17 +178,19 @@ public class StudentInfoADT {
 			//create student
 			//firstName, lastName, dateOfBirth, middleInitial, grade, identified
 					//Student thisStudent = new Student(firstName, lastName, dateOfBirth, middleInitial, grade, identified);
-			Student thisStudent = new Student(currentStudent[0], currentStudent[1], currentStudent[2], currentStudent[3], currentStudent[4], currentStudent[5]);
+			Student thisStudent = new Student(currentStudent[0].toString(), currentStudent[1], currentStudent[2], currentStudent[3], currentStudent[4], currentStudent[5]);
 		    
 			
 			
 			/****************************************************************************
 				Good example & explanation for using string formatters (ex. decimal format)
 				->  https://dzone.com/articles/java-string-format-examples
-			 ****************************************************************************/
-			 String stringToPrint = String.format("\n\nStudent named %s %s %s in grade %s saved!\n\n",
+				
+				String stringToPrint = String.format("\n\nStudent named %s %s %s in grade %s saved!\n\n",
 			    		thisStudent._firstName, thisStudent._middleInitial, thisStudent._lastName, thisStudent._grade);
 			 System.out.println(stringToPrint);
+			 ****************************************************************************/
+			 System.out.println("Student " + thisStudent.studentAllInfo() + "!");
 			 break;
 			
 		}//closing for while
@@ -185,5 +200,3 @@ public class StudentInfoADT {
 
 
 //---------------------------------------------------------------------------------
-
-		

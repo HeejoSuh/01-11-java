@@ -30,18 +30,13 @@ import java.util.Scanner;
 //enum showing Grades and grade in String
 //possible to put inside class
 enum GradesEnum {
-	TWELVE("12"), 
-	ELEVEN("11"), 
-	TEN("10"), 
-	NINE("9"), 
-	EIGHT("8"), 
-	SEVEN("7"); //close off last enum (;)
+	TWELVE, 
+	ELEVEN, 
+	TEN, 
+	NINE, 
+	EIGHT, 
+	SEVEN; //close off last enum (;)
 
-	private final String grade;
-	//need to define specifically what the data type is
-	GradesEnum(String grade) {
-        this.grade = grade;
-    }
 }//closing for enum		
 
 //---------------------------------------------------------------------------------
@@ -128,6 +123,7 @@ public class StudentInfoADT {
 		Integer classRoomStudentCount = 3;//three students in class
 		Student[] classRoom = new Student[classRoomStudentCount];
 		Integer nthStudent = 0;
+		Boolean notCorrectInput = true;
 		
 		//get input
 		//while (haveGottenDistance == "") {
@@ -136,47 +132,47 @@ public class StudentInfoADT {
 			currentStudent = new String[] {firstName, lastName, middleInitial, dateOfBirth, grade, identified};
 			for ( int index=0; index<currentStudent.length; index++ ) {  
 	    		//get correct input
-			    getCorrectInput:
-			    	while (true) {
-						System.out.println("\n\nEnter "+currentStudent[index]+" for student #"+(nthStudent+1));
-						//---------------------------
-						if (currentStudent[index] == grade) {
-							System.out.print("Options: ");
-							//for grades, print possible inputs
-							for(GradesEnum grades : GradesEnum.values()) { 
-								System.out.print(grades + " ");
-							}
+				notCorrectInput = true;
+				while (notCorrectInput) {
+					System.out.println("\n\nEnter "+currentStudent[index]+" for student #"+(nthStudent+1));
+					//---------------------------
+					if (currentStudent[index] == grade) {
+						System.out.print("Options: ");
+						//for grades, print possible inputs
+						for(GradesEnum grades : GradesEnum.values()) { 
+							System.out.print(grades + " ");
 						}
-						
-						currentInput = scanner.nextLine(); // get input
-						
-						//---------------------------
-						if (currentStudent[index] == grade) {
-							//if input is in enum
-							try {
-								Object currentGrade = GradesEnum.valueOf(currentInput.toUpperCase());
-								//currentStudent[index] = currentGrade.toString();
-								currentStudent[index] = currentGrade.toString();
-								break getCorrectInput;
-							}catch (IllegalArgumentException x) { 
-								System.out.println("Please input a valid grade!\n");
-							}
-						//---------------------------
-						}else if (currentStudent[index] == identified) {
-							//if input is yes or no
-							//compare **string**
-							if (currentInput.equals("y") ||currentInput.equals("Y") || currentInput.equals("n") || currentInput.equals("N") ) {
-								currentStudent[index] = currentInput; //add to list
-								break getCorrectInput;
-							}else {
-								System.out.println("Please enter  Y or N for yes or no!\n");
-							}
-						//---------------------------
-						}else {
+					}
+					
+					currentInput = scanner.nextLine(); // get input
+					
+					//---------------------------
+					if (currentStudent[index] == grade) {
+						//if input is in enum
+						try {
+							Object currentGrade = GradesEnum.valueOf(currentInput.toUpperCase());
+							//currentStudent[index] = currentGrade.toString();
+							currentStudent[index] = currentGrade.toString();
+							notCorrectInput = false;
+						}catch (IllegalArgumentException x) { 
+							System.out.println("Please input a valid grade!\n");
+						}
+					//---------------------------
+					}else if (currentStudent[index] == identified) {
+						//if input is yes or no
+						//compare **string**
+						if (currentInput.equals("y") ||currentInput.equals("Y") || currentInput.equals("n") || currentInput.equals("N") ) {
 							currentStudent[index] = currentInput; //add to list
-						break getCorrectInput;
+							notCorrectInput = false;
+						}else {
+							System.out.println("Please enter  Y or N for yes or no!\n");
 						}
-			    	}
+					//---------------------------
+					}else {
+						currentStudent[index] = currentInput; //add to list
+						notCorrectInput = false;
+					}
+		    	}
 			}
 			//create student
 			//firstName, lastName, dateOfBirth, middleInitial, grade, identified
